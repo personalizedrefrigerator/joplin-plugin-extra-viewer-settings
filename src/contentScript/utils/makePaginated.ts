@@ -2,6 +2,7 @@ import { createScrollDetector } from "./createScrollDetector";
 import { makeButton } from "./makeButton";
 import { makeInput } from "./makeInput";
 
+const autoAddedClassName = 'reader-auto-added';
 
 export const makePaginated = (
 	container: HTMLElement,
@@ -13,19 +14,19 @@ export const makePaginated = (
 	const nextButton = makeButton(container, {
 		content: '>',
 		title: 'Next',
-		classList: ['reader-button', '-right'],
+		classList: ['reader-button', '-right', autoAddedClassName],
 	});
 
 	const prevButton = makeButton(container, {
 		content: '<',
 		title: 'Previous',
-		classList: ['reader-button', '-left'],
+		classList: ['reader-button', '-left', autoAddedClassName],
 	});
 
 	const pageNumberInput = makeInput(container, {
 		placeholder: 'Page',
 		type: 'number',
-		classList: ['reader-page-number'],
+		classList: ['reader-page-number', autoAddedClassName],
 	});
 
 	const getPageSize = () => {
@@ -136,6 +137,7 @@ export const makePaginated = (
 
 	const onResize = () => {
 		setPageNumber(pageNumberFromCurrentScroll());
+		scrollToCurrentPage();
 	};
 	document.addEventListener('resize', onResize);
 
@@ -143,7 +145,7 @@ export const makePaginated = (
 	const cleanUp = () => {
 		if (destroyed) return;
 
-		const autoAdded = document.querySelectorAll('.reader-auto-added');
+		const autoAdded = document.querySelectorAll(`.${autoAddedClassName}`);
 		for (const element of autoAdded) {
 			element.remove();
 		}
@@ -179,7 +181,8 @@ export const makePaginated = (
 			for (const child of contentWrapper.children) {
 				const childRect = child.getBoundingClientRect();
 				if (
-					getComputedStyle(child).position === 'static' &&
+					getComputedStyle(child).position !== 'fixed' &&
+					!child.classList.contains(autoAddedClassName) &&
 					childRect.left >= containerBox.left
 				) {
 					return i;

@@ -13,7 +13,7 @@ export const makeInput = (parent: HTMLElement, options: InputOptions) => {
 	input.type = options.type;
 	input.value = options.value;
 	input.setAttribute('placeHolder', options.placeholder);
-	input.classList.add(...options.classList, 'reader-auto-added');
+	input.classList.add(...options.classList);
 
 	if (options.label) {
 		const labelElement = document.createElement('label');

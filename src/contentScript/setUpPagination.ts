@@ -1,34 +1,27 @@
-import { contentScriptId } from "../constants";
+import { ContentScriptControl } from "src/types";
 import { debounce } from "./utils/debounce";
 import { makePaginated, PaginationController } from "./utils/makePaginated";
+
 
 interface ExtendedWindow {
 	paginationController: PaginationController|undefined;
 }
 declare const window: ExtendedWindow;
 
-declare const webviewApi: {
-	postMessage(contentScriptId: string, arg: unknown): Promise<any>;
-};
-
 let lastNoteId = '';
 
-const paginate = debounce(() => {
+const paginate = debounce((control: ContentScriptControl) => {
 	let noteId = '';
 
 	window.paginationController?.cleanUp();
 
 	const container = document.querySelector<HTMLElement>('#rendered-md');
 	container.classList.add('-loading');
-	document.body.classList.add('paginate');
 
 	const sendPageChange = debounce(() => {
 		if (!noteId) return;
-	
-		void webviewApi.postMessage(contentScriptId, {
-			location: window.paginationController.getLocation(),
-			noteId,
-		});
+
+		void control.setLastLocation(noteId, paginationController.getLocation());
 	}, 1000);
 	const lastPageNumber = window.paginationController?.getPageNumber() ?? 0;
 
@@ -39,7 +32,7 @@ const paginate = debounce(() => {
 	paginationController.setPageNumber(lastPageNumber);
 
 	(async () => {
-		const data = await webviewApi.postMessage(contentScriptId, 'getLocation');
+		const data = await control.getNoteAndLocation();
 		const location = data.location;
 
 		if (data.noteId !== lastNoteId) {
@@ -62,10 +55,34 @@ const paginate = debounce(() => {
 	})();
 }, 100);
 
-export const setUpPagination = () => {
-	document.addEventListener('joplin-noteDidUpdate', () => {
-		paginate();
+export const setUpPagination = async (control: ContentScriptControl) => {
+	let paginateEnabled = (await control.getSettings()).paginate;
+	const updatePaginated = () => {
+		if (paginateEnabled) {
+			document.body.classList.add('paginate');
+			paginate(control);
+		} else {
+			document.body.classList.remove('paginate');
+		}
+	};
+
+	const settingsChangeListener = control.addOnSettingsChangeListener(async () => {
+		const settings = await control.getSettings();
+		if (!settings.paginate) {
+			settingsChangeListener.remove();
+
+			window.paginationController?.cleanUp();
+			window.paginationController = null;
+			paginateEnabled = false;
+		} else if (!paginateEnabled) {
+			paginateEnabled = true;
+			updatePaginated();
+		}
 	});
 
-	paginate();
+	document.addEventListener('joplin-noteDidUpdate', () => {
+		updatePaginated();
+	});
+
+	updatePaginated();
 };

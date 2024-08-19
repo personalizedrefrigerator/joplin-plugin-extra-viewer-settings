@@ -7,9 +7,11 @@ import { contentScriptId, savedLocationUserDataId } from './constants';
 joplin.plugins.register({
 	onStart: async function() {
 		let lastSettings: PluginSettings;
+		let onSettingsChange: ()=>void = () => {};
 		let contentScriptRegistered = false;
 		lastSettings = await registerSettings((settings: PluginSettings) => {
 			lastSettings = settings;
+			onSettingsChange();
 		});
 
 
@@ -18,6 +20,13 @@ joplin.plugins.register({
 			if (message === 'getSettings') {
 				contentScriptRegistered = true;
 				return lastSettings;
+			} else if (message === 'waitForSettingsChange') {
+				return new Promise<PluginSettings>(resolve => {
+					onSettingsChange = () => {
+						onSettingsChange = ()=>{};
+						resolve(lastSettings);
+					};
+				});
 			}
 			
 			const selectedNoteId = (await joplin.workspace.selectedNoteIds())[0];
@@ -29,6 +38,7 @@ joplin.plugins.register({
 				}
 
 				const data = await joplin.data.userDataGet(ModelType.Note, selectedNoteId, savedLocationUserDataId);
+				console.log('getloc', data)
 				return {
 					location: data || 0,
 					noteId: selectedNoteId,
@@ -36,12 +46,18 @@ joplin.plugins.register({
 			} else if (typeof message === 'object' && 'location' in message && 'noteId' in message) {
 				if (!selectedNoteId || message.noteId !== selectedNoteId) return;
 
+				console.log('setloc', selectedNoteId, message.location);
 				await joplin.data.userDataSet(
 					ModelType.Note,
 					selectedNoteId,
 					savedLocationUserDataId,
 					message.location,
 				);
+			} else if(typeof message === 'object' && 'newSettings' in message) {
+				const newSettings = message.newSettings as PluginSettings;
+				await joplin.settings.setValue('fontFamily', `${newSettings.fontFamily}`);
+				await joplin.settings.setValue('fontSize', Number(newSettings.fontSize));
+				await joplin.settings.setValue('paginate', !!newSettings.paginate);
 			} else {
 				console.warn('unknown message', message);
 			}
