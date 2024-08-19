@@ -6,16 +6,10 @@ export enum TextDirection {
 }
 
 export interface PluginSettings {
-	lineNumbers: boolean;
-	codeFolding: boolean;
-	enableAutocomplete: boolean;
-
-	highlightActiveLine: boolean;
-	highlightActiveLineGutter: boolean;
-	highlightSpaces: boolean;
-	highlightTrailingSpaces: boolean;
-	highlightSelectionMatches: boolean;
-	gridPattern: boolean;
+	// null => default
+	fontFamily: string|null;
+	fontSize: number|null;
+	paginate: boolean;
 
 	textDirection: TextDirection,
 }

@@ -26,8 +26,8 @@ joplin.plugins.register({
 			}
 		});
 
-		const contentScriptId = 'cm6-extended-settings';
-		await joplin.contentScripts.register(ContentScriptType.CodeMirrorPlugin, contentScriptId, './contentScript/contentScript.js');
+		const contentScriptId = 'viewer-extended-settings';
+		await joplin.contentScripts.register(ContentScriptType.MarkdownItPlugin, contentScriptId, './contentScript/contentScript.js');
 		await joplin.contentScripts.onMessage(contentScriptId, (message: string) => {
 			if (message === 'getSettings') {
 				contentScriptRegistered = true;

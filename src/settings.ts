@@ -19,52 +19,6 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 	};
 
 	const settingsSpec: Record<keyof PluginSettings, SettingItem> = {
-		lineNumbers: {
-			...defaultSettingOptions,
-			value: true,
-			label: localization.setting__showLineNumber,
-		},
-		codeFolding: {
-			...defaultSettingOptions,
-			value: false,
-			label: localization.setting__enableCodeFolding,
-		},
-		enableAutocomplete: {
-			...defaultSettingOptions,
-			value: false,
-			label: localization.setting__enableAutocomplete,
-		},
-		highlightActiveLineGutter: {
-			...defaultSettingOptions,
-			value: true,
-			label: localization.setting__highlightLineGutter,
-			description: localization.setting__highlightLineGutter__description,
-		},
-		highlightActiveLine: {
-			...defaultSettingOptions,
-			value: false,
-			label: localization.setting__highlightActiveLine,
-		},
-		highlightSpaces: {
-			...defaultSettingOptions,
-			value: false,
-			label: localization.setting__highlightSpaces,
-		},
-		highlightTrailingSpaces: {
-			...defaultSettingOptions,
-			value: false,
-			label: localization.setting__highlightTrailingSpaces,
-		},
-		highlightSelectionMatches: {
-			...defaultSettingOptions,
-			value: false,
-			label: localization.setting__highlightSelectionMatches,
-		},
-		gridPattern: {
-			...defaultSettingOptions,
-			value: false,
-			label: localization.setting__showGridPattern,
-		},
 		textDirection: {
 			...defaultSettingOptions,
 			type: SettingItemType.String,
@@ -79,6 +33,23 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 				[TextDirection.LeftToRight]: localization.setting__textDirection__leftToRight,
 				[TextDirection.RightToLeft]: localization.setting__textDirection__rightToLeft,
 			},
+		},
+		fontFamily: {
+			...defaultSettingOptions,
+			type: SettingItemType.String,
+			value: '',
+			label: localization.setting__fontFamily,
+		},
+		fontSize: {
+			...defaultSettingOptions,
+			type: SettingItemType.String,
+			value: '',
+			label: localization.setting__fontSize,
+		},
+		paginate: {
+			...defaultSettingOptions,
+			value: false,
+			label: localization.setting__paginate,
 		},
 	};
 

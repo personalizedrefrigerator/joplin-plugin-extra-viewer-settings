@@ -1,16 +1,9 @@
 interface AppLocalization {
+	setting__paginate: string;
+	setting__fontSize: string;
+	setting__fontFamily: string;
 	settings__appName: string;
 	settings__description: string;
-	setting__showLineNumber: string;
-	setting__enableCodeFolding: string;
-	setting__enableAutocomplete: string;
-	setting__highlightLineGutter: string;
-	setting__highlightLineGutter__description: string;
-	setting__highlightActiveLine: string;
-	setting__highlightSpaces: string;
-	setting__highlightTrailingSpaces: string;
-	setting__highlightSelectionMatches: string;
-	setting__showGridPattern: string;
 	setting__textDirection: string;
 	setting__textDirection__description: string;
 	setting__textDirection__auto: string;
@@ -19,26 +12,17 @@ interface AppLocalization {
 }
 
 const defaultStrings: AppLocalization = {
-	settings__appName: 'Extra editor settings',
-	settings__description: 'Additional settings for Joplin\'s beta and mobile markdown editors.',
-	setting__showLineNumber: 'Show line numbers',
-	setting__enableCodeFolding: 'Enable code folding',
-	setting__enableAutocomplete: 'Enable autocomplete',
-
-	setting__highlightLineGutter: 'Highlight the gutter for the active line',
-	setting__highlightLineGutter__description: 'Requires "show line numbers" to be enabled.',
-	setting__highlightActiveLine: 'Highlight active line',
-	setting__highlightSpaces: 'Highlight spaces',
-	setting__highlightTrailingSpaces: 'Highlight trailing spaces',
-	setting__highlightSelectionMatches: 'Highlight selection matches',
-
-	setting__showGridPattern: 'Show background grid pattern',
+	settings__appName: 'Extra viewer settings',
+	settings__description: 'Additional settings for Joplin\'s Markdown viewer.',
 
 	setting__textDirection: 'Text direction',
 	setting__textDirection__description: 'Overrides the default direction of text in the CodeMirror editor. For most users, this should be set to "auto".',
 	setting__textDirection__auto: 'Auto',
 	setting__textDirection__leftToRight: 'Left-to-right',
 	setting__textDirection__rightToLeft: 'Right-to-left',
+	setting__paginate: 'Paginate',
+	setting__fontSize: 'Font size',
+	setting__fontFamily: 'Font family',
 };
 
 const localizations: Record<string, AppLocalization> = {
