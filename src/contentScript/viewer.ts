@@ -41,7 +41,7 @@ const createScrollDetector = (getScroll: GetScrollCallback, onScrollEnd: OnScrol
 
 	const updateState = () => {
 		const nowTime = performance.now();
-		if (nowTime > lastTime + 100) {
+		if (nowTime > lastTime + 50) {
 			velocity = (getScroll() - lastScroll) / (nowTime - lastTime);
 			if (Math.abs(velocity) < 1e-8) {
 				velocity = 0;
@@ -60,7 +60,7 @@ const createScrollDetector = (getScroll: GetScrollCallback, onScrollEnd: OnScrol
 		} else {
 			checkScrollEnd();
 		}
-	}, 250);
+	}, 100);
 
 	return {
 		onScrollUpdate: async () => {
@@ -116,33 +116,39 @@ const paginate = () => {
 		return container.clientWidth;
 	};
 
-	const scrollPositionToPageNumber = (position: number) => {
+	const convertScrollPositionToPageNumber = (position: number) => {
 		return Math.ceil(position / getPageSize()) - 1;
 	};
 
-	let autoscrollDisabled = false;
-	const updateScroll = () => {
-		if (autoscrollDisabled) return;
+	const scrollToCurrentPage = () => {
 		const target = pageNumber * getPageSize();
-		container.scrollTo(target, 0);
+		if (Math.floor(container.scrollLeft) !== Math.floor(target)) {
+			container.scrollTo(target, 0);
+		}
 	};
 
-	const updatePage = () => {
-		const maxPage = scrollPositionToPageNumber(container.scrollWidth);
-		pageNumber = Math.max(Math.min(maxPage, pageNumber), 0);
-		pageNumberInput.value = `${pageNumber + 1}`;
-
-		updateScroll();
-
-		prevButton.disabled = pageNumber === 0;
-		nextButton.disabled = pageNumber === maxPage;
+	const pageNumberFromCurrentScroll = () => {
+		return convertScrollPositionToPageNumber(
+			container.scrollLeft + getPageSize() / 2
+		);
 	};
 
+	const updateControls = () => {
+		const currentPageNumber = pageNumberFromCurrentScroll();
+		pageNumberInput.value = `${currentPageNumber + 1}`;
+
+		const maxPage = convertScrollPositionToPageNumber(container.scrollWidth);
+		prevButton.disabled = currentPageNumber === 0;
+		nextButton.disabled = currentPageNumber === maxPage;
+	};
 
 	const setPageNumber = (page: number) => {
+		const maxPage = convertScrollPositionToPageNumber(container.scrollWidth);
+		page = Math.max(0, Math.min(page, maxPage));
+
 		if (page !== pageNumber && isFinite(page)) {
 			pageNumber = page;
-			updatePage();
+			scrollToCurrentPage();
 		}
 	};
 
@@ -173,9 +179,8 @@ const paginate = () => {
 		setPageNumber(parseInt(pageNumberInput.value) - 1);
 	};
 
-	requestAnimationFrame(updatePage);
+	requestAnimationFrame(updateControls);
 
-	let ignoreScrollEvents = false;
 	const onKeyDown = (event: KeyboardEvent) => {
 		if (event.defaultPrevented) return;
 
@@ -188,48 +193,19 @@ const paginate = () => {
 
 		if (pageNumber !== newPageNumber) {
 			event.preventDefault();
-			ignoreScrollEvents = true;
 			setPageNumber(newPageNumber);
 		}
 	};
 	window.addEventListener('keydown', onKeyDown);
 
-	const onKeyUp = (event: KeyboardEvent) => {
-		if (event.code === 'ArrowRight' || event.code === 'ArrowLeft') {
-			ignoreScrollEvents = false;
-		}
-	};
-	window.addEventListener('keyup', onKeyUp);
-
-	const pageNumberFromCurrentScroll = () => {
-		const pageSize = getPageSize();
-		const leftEdgePage = scrollPositionToPageNumber(container.scrollLeft + pageSize * 0.1);
-		const rightEdgePage = scrollPositionToPageNumber(container.scrollLeft + pageSize * 0.9);
-
-		const velocity = scrollEndDetector.getVelocity();
-		if (velocity === 0) {
-			const touchingCurrentPage = rightEdgePage === pageNumber || leftEdgePage === pageNumber;
-			return touchingCurrentPage ? pageNumber : rightEdgePage;
-		} else if (velocity > 0) {
-			return rightEdgePage;
-		} else {
-			return leftEdgePage;
-		}
-	};
-
 	const scrollEndDetector = createScrollDetector(() => container.scrollLeft, () => {
-		autoscrollDisabled = false;
-
-		if (ignoreScrollEvents) return;
 		setPageNumber(pageNumberFromCurrentScroll());
-		updateScroll();
+		scrollToCurrentPage();
 	});
 
 	const onScroll = () => {
-		if (ignoreScrollEvents) return;
-
-		autoscrollDisabled = true;
 		scrollEndDetector.onScrollUpdate();
+		updateControls();
 	};
 	container.addEventListener('scroll', onScroll);
 
@@ -245,7 +221,6 @@ const paginate = () => {
 		}
 		document.body.classList.remove('paginate');
 		window.removeEventListener('keydown', onKeyDown);
-		window.removeEventListener('keyup', onKeyUp);
 		container.removeEventListener('focusin', onFocusChange);
 		container.removeEventListener('scroll', onScroll);
 	};

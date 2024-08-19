@@ -253,6 +253,7 @@ const extraScriptConfig = {
 		fallback: moduleFallback,
 		extensions: ['.js', '.tsx', '.ts', '.json'],
 	},
+	target: 'web',
 
 	// We support requiring @codemirror/... libraries through require('@codemirror/...')
 	externalsType: 'commonjs',
