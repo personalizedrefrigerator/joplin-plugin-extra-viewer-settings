@@ -38,6 +38,8 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 			...defaultSettingOptions,
 			type: SettingItemType.Int,
 			value: 0,
+			minimum: 0,
+			maximum: 1000,
 			label: localization.setting__maximumWidth,
 		},
 		paginate: {
