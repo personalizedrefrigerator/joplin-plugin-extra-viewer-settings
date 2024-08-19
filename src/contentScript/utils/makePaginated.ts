@@ -1,4 +1,5 @@
 import { createScrollDetector } from "./createScrollDetector";
+import { debounce } from "./debounce";
 import { makeButton } from "./makeButton";
 import { makeInput } from "./makeInput";
 
@@ -99,11 +100,40 @@ export const makePaginated = (
 		setPageNumber(pageNumber + Math.floor(offset / getPageSize()));
 	};
 
+	const setCurrentLocation = (location: number) => {
+		location = Math.min(location, contentWrapper.children.length - 1);
+		const target = contentWrapper.children.item(location);
+		if (target) {
+			scrollToElement(target);
+			return target;
+		}
+		return null;
+	};
+
+	const getCurrentLocation = () => {
+		const containerBox = container.getBoundingClientRect();
+
+		let i = 0;
+		for (const child of contentWrapper.children) {
+			const childRect = child.getBoundingClientRect();
+			if (
+				getComputedStyle(child).position !== 'fixed' &&
+				!child.classList.contains(autoAddedClassName) &&
+				childRect.left >= containerBox.left
+			) {
+				return i;
+			}
+
+			i++;
+		}
+		return i;
+	};
+
 	nextButton.onclick = nextPage;
 	prevButton.onclick = prevPage;
-	pageNumberInput.oninput = () => {
+	pageNumberInput.oninput = debounce(() => {
 		setPageNumber(parseInt(pageNumberInput.value) - 1);
-	};
+	}, 250);
 
 	requestAnimationFrame(updateControls);
 
@@ -124,9 +154,11 @@ export const makePaginated = (
 	};
 	window.addEventListener('keydown', onKeyDown);
 
+	let lastLocation = 0;
 	const scrollEndDetector = createScrollDetector(() => container.scrollLeft, () => {
 		setPageNumber(pageNumberFromCurrentScroll());
 		scrollToCurrentPage();
+		lastLocation = getCurrentLocation();
 	});
 
 	const onScroll = () => {
@@ -135,10 +167,10 @@ export const makePaginated = (
 	};
 	container.addEventListener('scroll', onScroll);
 
-	const onResize = () => {
-		setPageNumber(pageNumberFromCurrentScroll());
-		scrollToCurrentPage();
-	};
+	const onResize = debounce(() => {
+		// Prevent the reading location from being lost
+		setCurrentLocation(lastLocation)?.scrollIntoView();
+	}, 100);
 	window.addEventListener('resize', onResize);
 
 	let destroyed = false;
@@ -165,31 +197,8 @@ export const makePaginated = (
 		getPageNumber: () => pageNumber,
 		scrollToCurrentPage,
 
-		setLocation: (location: number) => {
-			location = Math.min(location, contentWrapper.children.length - 1);
-			const target = contentWrapper.children.item(location);
-			if (target) {
-				scrollToElement(target);
-			}
-		},
-		getLocation: () => {
-			const containerBox = container.getBoundingClientRect();
-
-			let i = 0;
-			for (const child of contentWrapper.children) {
-				const childRect = child.getBoundingClientRect();
-				if (
-					getComputedStyle(child).position !== 'fixed' &&
-					!child.classList.contains(autoAddedClassName) &&
-					childRect.left >= containerBox.left
-				) {
-					return i;
-				}
-
-				i++;
-			}
-			return i;
-		},
+		setLocation: setCurrentLocation,
+		getLocation: getCurrentLocation,
 	};
 };
 

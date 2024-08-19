@@ -24,7 +24,10 @@ body.paginate {
 
 		--margin: 70px;
 		height: 100vh;
+
+		--page-size: 100vw;
 		width: 100vw;
+
 		padding: 0;
 		margin: 0;
 		padding-left: calc(var(--margin) / 2);
@@ -32,13 +35,17 @@ body.paginate {
 		padding-bottom: 30px !important; /* !important overrides the viewer's default styling */
 		padding-top: var(--viewer-toolbar-height);
 
-		--page-pos: calc(var(--page-number) * -100vw);
-		column-width: calc(100vw - var(--margin));
+		--page-pos: calc(var(--page-number) * (0 - var(--page-size)));
+		column-width: calc(var(--page-size) - var(--margin));
 		column-gap: var(--margin);
 		box-sizing: border-box;
 
-		&.-loading {
+		&.-loading, &.-resizing {
 			scroll-behavior: auto;
+		}
+
+		&.-resizing {
+			overflow: hidden;
 		}
 	}
 
