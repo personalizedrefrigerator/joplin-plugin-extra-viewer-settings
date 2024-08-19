@@ -1,6 +1,6 @@
 interface ButtonOptions {
 	content: string;
-	title: string;
+	title?: string;
 	classList: string[];
 }
 

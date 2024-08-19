@@ -94,7 +94,7 @@ export const makePaginated = (
 		// if the viewport is already scrolled, offset is relative to the current
 		// **scroll*, and so we add to pageNumber.
 		const offset = targetRect.left - containerRect.left;
-		console.log('scrolling by', offset);
+		console.log('scrolling by', offset, 'page size', getPageSize());
 		setPageNumber(pageNumber + Math.floor(offset / getPageSize()));
 	};
 
@@ -134,11 +134,6 @@ export const makePaginated = (
 	};
 	container.addEventListener('scroll', onScroll);
 
-	const onFocusChange = (event: Event) => {
-		scrollToElement(event.target as HTMLElement);
-	};
-	container.addEventListener('focusin', onFocusChange);
-
 	const onResize = () => {
 		setPageNumber(pageNumberFromCurrentScroll());
 	};
@@ -155,7 +150,6 @@ export const makePaginated = (
 		container.classList.remove('paginated-element');
 		window.removeEventListener('keydown', onKeyDown);
 		document.removeEventListener('resize', onResize);
-		container.removeEventListener('focusin', onFocusChange);
 		container.removeEventListener('scroll', onScroll);
 		destroyed = true;
 	};
