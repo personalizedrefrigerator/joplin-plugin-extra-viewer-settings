@@ -5,16 +5,16 @@
 	"mobile_min_version": "3.0",
 	"version": "1.2.1",
 	"name": "Extra Markdown viewer settings",
-	"description": "Line numbers, code folding, space highlighting, and other built-in options for the CodeMirror 6 editor.",
+	"description": "Pagination for Joplin's Markdown viewer. Supports mobile and desktop",
 	"author": "Henry Heino",
 	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-plugin-extra-cm6-settings",
 	"repository_url": "https://github.com/personalizedrefrigerator/joplin-plugin-extra-cm6-settings",
-	"keywords": [ "codemirror", "line" ],
+	"keywords": [ ],
 	"platforms": [ "mobile", "desktop" ],
-	"categories": [ "editor" ],
+	"categories": [ "viewer" ],
 	"screenshots": [ { "src": "images/screenshot.png", "label": "Screenshot: Shows line numbers, autocomplete, and folding in use" } ],
 	"icons": {
-		"128": "images/icon-128.png",
-		"256": "images/icon-256.autoinvert.png"
+		"180": "images/icon-180.png",
+		"256": "images/icon-256.png"
 	}
 }
