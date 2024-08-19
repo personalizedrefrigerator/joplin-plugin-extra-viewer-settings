@@ -4,11 +4,11 @@ import { PluginSettings, TextDirection } from "./types";
 import localization from "./localization";
 
 export const registerSettings = async (applySettings: (settings: PluginSettings)=>void) => {
-	const sectionName = 'codemirror6-extended-options';
+	const sectionName = 'viewer-extended-options';
 	await joplin.settings.registerSection(sectionName, {
 		label: localization.settings__appName,
 		description: localization.settings__description,
-		iconName: 'fas fa-edit',
+		iconName: 'fas fa-file-alt',
 	});
 
 	const defaultSettingOptions = {
