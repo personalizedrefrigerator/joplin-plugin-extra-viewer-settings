@@ -48,7 +48,6 @@ joplin.plugins.register({
 			} else if (typeof message === 'object' && 'location' in message && 'noteId' in message) {
 				if (!selectedNoteId || message.noteId !== selectedNoteId) return;
 
-				console.log('setloc', selectedNoteId, message.location);
 				await joplin.data.userDataSet(
 					ModelType.Note,
 					selectedNoteId,
@@ -59,6 +58,7 @@ joplin.plugins.register({
 				const newSettings = message.newSettings as PluginSettings;
 				await joplin.settings.setValue('fontFamily', `${newSettings.fontFamily}`);
 				await joplin.settings.setValue('fontSize', Number(newSettings.fontSize));
+				await joplin.settings.setValue('maxWidth', Number(newSettings.maxWidth));
 				await joplin.settings.setValue('paginate', !!newSettings.paginate);
 			} else {
 				console.warn('unknown message', message);

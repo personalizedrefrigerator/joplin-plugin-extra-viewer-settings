@@ -12,7 +12,7 @@ export const makeInput = (parent: HTMLElement, options: InputOptions) => {
 	const input = document.createElement('input');
 	input.type = options.type;
 	input.value = options.value;
-	input.setAttribute('placeHolder', options.placeholder);
+	input.setAttribute('placeHolder', options.placeholder ?? '');
 	input.classList.add(...options.classList);
 
 	if (options.label) {

@@ -1,4 +1,5 @@
 interface AppLocalization {
+	setting__maximumWidth: any;
 	setting__paginate: string;
 	setting__fontSize: string;
 	setting__fontFamily: string;
@@ -20,6 +21,7 @@ const defaultStrings: AppLocalization = {
 	setting__textDirection__auto: 'Auto',
 	setting__textDirection__leftToRight: 'Left-to-right',
 	setting__textDirection__rightToLeft: 'Right-to-left',
+	setting__maximumWidth: 'Maximum viewer width',
 	setting__paginate: 'Paginate',
 	setting__fontSize: 'Font size',
 	setting__fontFamily: 'Font family',

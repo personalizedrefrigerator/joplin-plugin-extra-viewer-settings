@@ -4,6 +4,7 @@ export interface PluginSettings {
 	fontFamily: string|null;
 	fontSize: number|null;
 	paginate: boolean;
+	maxWidth: number|null;
 }
 
 type NoteAndLocation = { noteId: string; location: number; };

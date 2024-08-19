@@ -29,6 +29,17 @@ const showSettingsDialog = async (control: ContentScriptControl) => {
 		});
 	};
 
+	const viewerMaxWidth = makeInput(settingsDialog, {
+		label: 'Maximum width:',
+		type: 'number',
+		classList: [],
+	});
+	viewerMaxWidth.oninput = () => {
+		setSettings({
+			maxWidth: Number(viewerMaxWidth.value),
+		});
+	};
+
 	const showReaderCheckbox = makeInput(settingsDialog, {
 		label: 'Paginate:',
 		type: 'checkbox',
@@ -48,6 +59,7 @@ const showSettingsDialog = async (control: ContentScriptControl) => {
 	const updateControlValues = () => {
 		textSizeInput.value = `${settings.fontSize ?? 10}`;
 		showReaderCheckbox.checked = settings.paginate;
+		viewerMaxWidth.value = `${settings.maxWidth}`;
 	};
 
 	const settingsOnChange = control.addOnSettingsChangeListener(async () => {
@@ -91,6 +103,15 @@ export const setUpToolbar = (control: ContentScriptControl) => {
 		const settings = await control.getSettings();
 		document.documentElement.style.setProperty('--user-font-family', settings.fontFamily);
 		document.documentElement.style.setProperty('--user-font-size', settings.fontSize ? `${settings.fontSize}pt` : '');
+
+		if (settings.maxWidth) {
+			document.documentElement.classList.add('-custom-max-width');
+			document.documentElement.style.setProperty('--user-max-width', `${settings.maxWidth}pt`);
+		} else {
+			document.documentElement.classList.remove('-custom-max-width');
+			document.documentElement.style.removeProperty('--user-max-width');
+		}
+
 		control.restoreScroll(savedScroll);
 	};
 

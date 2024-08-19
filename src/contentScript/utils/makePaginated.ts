@@ -139,6 +139,12 @@ export const makePaginated = (
 
 	const onKeyDown = (event: KeyboardEvent) => {
 		if (event.defaultPrevented) return;
+		const allowIfFocused: Element[] = [ container, document.body, document.documentElement ];
+		const canExcludeActiveElement = document.activeElement && !allowIfFocused.includes(document.activeElement);
+
+		if (canExcludeActiveElement && (!container.contains(document.activeElement) || document.activeElement.tagName === 'INPUT')) {
+			return;
+		}
 
 		let newPageNumber = pageNumber;
 		if (event.code === 'ArrowRight') {

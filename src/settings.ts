@@ -2,6 +2,7 @@ import joplin from "api";
 import { SettingItem, SettingItemSubType, SettingItemType, SettingStorage } from "api/types";
 import { PluginSettings } from "./types";
 import localization from "./localization";
+import { isMobile } from "./utils/isMobile";
 
 export const registerSettings = async (applySettings: (settings: PluginSettings)=>void) => {
 	const sectionName = 'viewer-extended-options';
@@ -30,12 +31,18 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 		fontSize: {
 			...defaultSettingOptions,
 			type: SettingItemType.Int,
-			value: 1,
+			value: 12,
 			label: localization.setting__fontSize,
+		},
+		maxWidth: {
+			...defaultSettingOptions,
+			type: SettingItemType.Int,
+			value: 0,
+			label: localization.setting__maximumWidth,
 		},
 		paginate: {
 			...defaultSettingOptions,
-			value: true,
+			value: await isMobile(),
 			label: localization.setting__paginate,
 		},
 	};
@@ -43,7 +50,7 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 	const readSettings = async () => {
 		const result: Record<string, any> = {};
 		for (const key in settingsSpec) {
-			result[key] = (await joplin.settings.value(key)) ?? true;
+			result[key] = await joplin.settings.value(key);
 		}
 		return result as PluginSettings;
 	};

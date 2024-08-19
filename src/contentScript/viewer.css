@@ -13,6 +13,12 @@ body.paginate {
 		overflow: clip;
 	}
 
+	.-custom-max-width #rendered-md {
+		max-width: min(var(--user-max-width), 100vw);
+		margin-left: auto;
+		margin-right: auto;
+	}
+
 	:root {
 		--viewer-toolbar-height: 40px;
 	}
