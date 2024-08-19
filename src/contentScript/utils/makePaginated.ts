@@ -66,12 +66,9 @@ export const makePaginated = (
 		newPageNumber = Math.max(0, Math.min(newPageNumber, maxPage));
 
 		if (newPageNumber !== pageNumber && isFinite(newPageNumber)) {
-			console.log(' setPage', newPageNumber);
 			pageNumber = newPageNumber;
 			onPageNumberChange?.(pageNumber);
 			scrollToCurrentPage();
-		} else {
-			console.log(' skip set page', newPageNumber, 'compares to current', pageNumber);
 		}
 	};
 
