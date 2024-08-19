@@ -3,6 +3,11 @@ body.paginate {
 	margin: 0;
 }
 
+#rendered-md {
+	font-size: var(--user-font-size);
+	font-family: var(--user-font-family);
+}
+
 @media screen {
 	body.paginate #joplin-container-content {
 		overflow: clip;
@@ -133,4 +138,34 @@ body.paginate {
 
 	background-color: transparent;
 	color: inherit;
+}
+
+.viewer-settings-dialog {
+	background-color: white;
+	color: black;
+	opacity: 0;
+	border-radius: 2em;
+
+	&[open] {
+		opacity: 1;
+	}
+
+	/* Animating dialogs: See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog */
+	transition: opacity 0.4s ease allow-discrete, display 0.4s ease allow-discrete;
+	&::backdrop {
+		transition: display 0.4s ease allow-discrete, overlay 0.4s ease allow-discrete;
+	}
+}
+
+@starting-style {
+	.viewer-settings-dialog[open] {
+		opacity: 0;
+	}
+}
+
+@media screen and (prefers-color-scheme: dark) {
+	.viewer-settings-dialog {
+		background-color: #222;
+		color: white;
+	}
 }

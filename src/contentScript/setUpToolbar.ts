@@ -1,25 +1,60 @@
+import { ContentScriptControl, PluginSettings } from "../types";
+import { debounce } from "./utils/debounce";
 import { makeButton } from "./utils/makeButton";
 import { makeInput } from "./utils/makeInput";
 
-const showSettingsDialog = () => {
+const showSettingsDialog = async (control: ContentScriptControl) => {
 	const settingsDialog = document.createElement('dialog');
+	settingsDialog.classList.add('viewer-settings-dialog');
+
+	let settings = await control.getSettings();
+	const setSettings = (newSettings: Partial<PluginSettings>) => {
+		settings = {
+			...settings,
+			...newSettings,
+		};
+		control.updateSettings(settings);
+	};
 
 	const textSizeInput = makeInput(settingsDialog, {
 		label: 'Text size:',
-		type: 'range',
-		value: '10',
+		type: 'number',
 		classList: [],
 	});
-	textSizeInput.min = '1';
+	textSizeInput.min = '5';
 	textSizeInput.max = '24';
 	textSizeInput.oninput = () => {
-		document.body.style.fontSize = `${textSizeInput.value}px`;
+		setSettings({
+			fontSize: Number(textSizeInput.value),
+		});
+	};
+
+	const showReaderCheckbox = makeInput(settingsDialog, {
+		label: 'Paginate:',
+		type: 'checkbox',
+		classList: [],
+	});
+	showReaderCheckbox.oninput = () => {
+		setSettings({
+			paginate: !!showReaderCheckbox.checked,
+		});
 	};
 
 	const closeButton = makeButton(settingsDialog, {
 		content: 'Close',
 		classList: [ 'button' ]
 	});
+
+	const updateControlValues = () => {
+		textSizeInput.value = `${settings.fontSize ?? 10}`;
+		showReaderCheckbox.checked = settings.paginate;
+	};
+
+	const settingsOnChange = control.addOnSettingsChangeListener(async () => {
+		settings = await control.getSettings();
+		updateControlValues();
+	});
+	updateControlValues();
 
 	closeButton.onclick = () => {
 		settingsDialog.close();
@@ -29,11 +64,16 @@ const showSettingsDialog = () => {
 	settingsDialog.showModal();
 
 	settingsDialog.onclose = () => {
-		settingsDialog.remove();
+		settingsOnChange.remove();
+
+		// Delay -- give time for a closing animation
+		setTimeout(() => {
+			settingsDialog.remove();
+		}, 1000);
 	};
 };
 
-export const setUpToolbar = () => {
+export const setUpToolbar = (control: ContentScriptControl) => {
 	const toolbar = document.createElement('div');
 	toolbar.classList.add('viewer-toolbar');
 
@@ -43,8 +83,19 @@ export const setUpToolbar = () => {
 		classList: [ 'settings-button' ],
 	});
 	settingsButton.onclick = () => {
-		showSettingsDialog();
+		showSettingsDialog(control);
 	};
+
+	const applyViewerSettings = async () => {
+		const savedScroll = control.cacheScroll();
+		const settings = await control.getSettings();
+		document.documentElement.style.setProperty('--user-font-family', settings.fontFamily);
+		document.documentElement.style.setProperty('--user-font-size', settings.fontSize ? `${settings.fontSize}pt` : '');
+		control.restoreScroll(savedScroll);
+	};
+
+	control.addOnSettingsChangeListener(debounce(applyViewerSettings, 500));
+	applyViewerSettings();
 
 	document.body.appendChild(toolbar);
 };

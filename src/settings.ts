@@ -1,5 +1,5 @@
 import joplin from "api";
-import { SettingItem, SettingItemType, SettingStorage } from "api/types";
+import { SettingItem, SettingItemSubType, SettingItemType, SettingStorage } from "api/types";
 import { PluginSettings } from "./types";
 import localization from "./localization";
 
@@ -23,12 +23,14 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 			...defaultSettingOptions,
 			type: SettingItemType.String,
 			value: '',
+			// font_family was added after the types were last updated
+			subType: 'font_family' as unknown as SettingItemSubType,
 			label: localization.setting__fontFamily,
 		},
 		fontSize: {
 			...defaultSettingOptions,
-			type: SettingItemType.String,
-			value: '',
+			type: SettingItemType.Int,
+			value: 1,
 			label: localization.setting__fontSize,
 		},
 		paginate: {

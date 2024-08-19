@@ -1,6 +1,8 @@
 import { contentScriptId } from "../constants";
 import { ContentScriptControl, PluginSettings } from "../types";
 import { setUpPagination } from "./setUpPagination";
+import { setUpToolbar } from "./setUpToolbar";
+import { PaginationController } from "./utils/makePaginated";
 
 
 
@@ -9,14 +11,13 @@ declare const webviewApi: {
 };
 
 const control: ContentScriptControl = {
-	setLastLocation: function (noteId: string, location: number): Promise<void> {
-		console.log('set last location', location);
+	setLastLocation: (noteId: string, location: number) => {
 		return webviewApi.postMessage(contentScriptId, {
 			location,
 			noteId,
 		});
 	},
-	getNoteAndLocation: function (): Promise<{ noteId: string; location: number; }> {
+	getNoteAndLocation: () => {
 		return webviewApi.postMessage(contentScriptId, 'getLocation');
 	},
 	getSettings: function (): Promise<PluginSettings> {
@@ -39,10 +40,25 @@ const control: ContentScriptControl = {
 			},
 		};
 	},
-	updateSettings: function (settings: PluginSettings): Promise<void> {
+	updateSettings: (settings: PluginSettings) => {
 		return webviewApi.postMessage(contentScriptId, {
 			newSettings: settings,
 		});
-	}
+	},
+
+	cacheScroll: () => {
+		if ('paginationController' in window) {
+			const paginationController = window.paginationController as PaginationController;
+			return paginationController?.getLocation() ?? -1;
+		}
+		return -1;
+	},
+	restoreScroll: (cacheKey) => {
+		if (cacheKey >= 0 && 'paginationController' in window) {
+			const paginationController = window.paginationController as PaginationController;
+			paginationController?.setLocation(cacheKey);
+		}
+	},
 };
 setUpPagination(control);
+setUpToolbar(control);

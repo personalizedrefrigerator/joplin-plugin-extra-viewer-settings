@@ -139,7 +139,7 @@ export const makePaginated = (
 		setPageNumber(pageNumberFromCurrentScroll());
 		scrollToCurrentPage();
 	};
-	document.addEventListener('resize', onResize);
+	window.addEventListener('resize', onResize);
 
 	let destroyed = false;
 	const cleanUp = () => {
@@ -151,7 +151,7 @@ export const makePaginated = (
 		}
 		container.classList.remove('paginated-element');
 		window.removeEventListener('keydown', onKeyDown);
-		document.removeEventListener('resize', onResize);
+		window.removeEventListener('resize', onResize);
 		container.removeEventListener('scroll', onScroll);
 		destroyed = true;
 	};
@@ -168,9 +168,7 @@ export const makePaginated = (
 		setLocation: (location: number) => {
 			location = Math.min(location, contentWrapper.children.length - 1);
 			const target = contentWrapper.children.item(location);
-			console.log('jump to location', location, target);
 			if (target) {
-				console.log('prepare scroll to element', target);
 				scrollToElement(target);
 			}
 		},

@@ -13,6 +13,7 @@ let lastNoteId = '';
 const paginate = debounce((control: ContentScriptControl) => {
 	let noteId = '';
 
+	const lastPageNumber = window.paginationController?.getPageNumber() ?? 0;
 	window.paginationController?.cleanUp();
 
 	const container = document.querySelector<HTMLElement>('#rendered-md');
@@ -23,7 +24,6 @@ const paginate = debounce((control: ContentScriptControl) => {
 
 		void control.setLastLocation(noteId, paginationController.getLocation());
 	}, 1000);
-	const lastPageNumber = window.paginationController?.getPageNumber() ?? 0;
 
 	window.paginationController = makePaginated(
 		container, container, sendPageChange,
@@ -66,18 +66,16 @@ export const setUpPagination = async (control: ContentScriptControl) => {
 		}
 	};
 
-	const settingsChangeListener = control.addOnSettingsChangeListener(async () => {
+	control.addOnSettingsChangeListener(async () => {
 		const settings = await control.getSettings();
 		if (!settings.paginate) {
-			settingsChangeListener.remove();
-
 			window.paginationController?.cleanUp();
 			window.paginationController = null;
 			paginateEnabled = false;
 		} else if (!paginateEnabled) {
 			paginateEnabled = true;
-			updatePaginated();
 		}
+		updatePaginated();
 	});
 
 	document.addEventListener('joplin-noteDidUpdate', () => {

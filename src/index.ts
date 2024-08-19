@@ -22,8 +22,10 @@ joplin.plugins.register({
 				return lastSettings;
 			} else if (message === 'waitForSettingsChange') {
 				return new Promise<PluginSettings>(resolve => {
+					let lastOnSettingsChange = onSettingsChange;
 					onSettingsChange = () => {
 						onSettingsChange = ()=>{};
+						lastOnSettingsChange();
 						resolve(lastSettings);
 					};
 				});
