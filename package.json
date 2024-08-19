@@ -1,6 +1,6 @@
 {
   "name": "joplin-plugin-extra-viewer-settings",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && webpack --env joplin-plugin-config=createArchive",
     "prepare": "npm run dist",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/personalizedrefrigerator/joplin-plugin-extra-editor-settings"
+    "url": "https://github.com/personalizedrefrigerator/joplin-plugin-extra-viewer-settings"
   },
   "license": "MIT",
   "keywords": [
@@ -19,10 +19,6 @@
     "publish"
   ],
   "devDependencies": {
-    "@codemirror/language": "^6.10.1",
-    "@codemirror/state": "^6.4.1",
-    "@codemirror/view": "^6.26.0",
-    "@codemirror/search": "^6.5.6",
     "@types/node": "^18.7.13",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^11.0.0",
