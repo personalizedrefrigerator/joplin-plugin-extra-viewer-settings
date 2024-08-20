@@ -106,7 +106,7 @@ export const setUpToolbar = (control: ContentScriptControl) => {
 
 		if (settings.maxWidth) {
 			document.documentElement.classList.add('-custom-max-width');
-			document.documentElement.style.setProperty('--user-max-width', `${settings.maxWidth}pt`);
+			document.documentElement.style.setProperty('--user-max-width', `${Math.max(settings.maxWidth, 100)}px`);
 		} else {
 			document.documentElement.classList.remove('-custom-max-width');
 			document.documentElement.style.removeProperty('--user-max-width');
