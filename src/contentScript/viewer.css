@@ -6,6 +6,7 @@ body.paginate {
 #rendered-md {
 	font-size: var(--user-font-size);
 	font-family: var(--user-font-family);
+	line-height: 1.5em;
 }
 
 @media screen {
