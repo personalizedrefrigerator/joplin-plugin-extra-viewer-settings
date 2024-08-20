@@ -129,16 +129,16 @@ body.paginate {
 	&.-left {
 		left: 0;
 		padding-right: 7px;
-		padding-left: 2px;
+		padding-left: 3px;
 	}
 
 	&.-right {
 		right: 0;
 		padding-left: 7px;
-		padding-right: 2px;
+		padding-right: 3px;
 	}
 
-	&:hover, &:focus {
+	&:hover, &:focus-visible {
 		font-size: 1.5rem;
 		opacity: 0.8;
 	}
