@@ -1,7 +1,10 @@
 interface AppLocalization {
-	setting__maximumWidth: any;
+	setting__maximumWidth: string;
+	setting__maximumWidth__description: string;
 	setting__paginate: string;
+	setting__paginate__description: string;
 	setting__fontSize: string;
+	setting__fontSize__description: string;
 	setting__fontFamily: string;
 	settings__appName: string;
 	settings__description: string;
@@ -24,9 +27,14 @@ const defaultStrings: AppLocalization = {
 	setting__textAlign__end: 'End',
 	setting__textAlign__center: 'Center',
 	setting__textAlign__justify: 'Justify',
-	setting__maximumWidth: 'Maximum viewer width',
+
+	setting__maximumWidth: 'Maximum width',
+	setting__maximumWidth__description: 'Maximum width of rendered content in the note viewer. Set this to 0 to use the default.',
 	setting__paginate: 'Paginate',
+	setting__paginate__description:
+		'If enabled, Markdown notes are shown in a paged reading mode. In this mode, reading progress is saved and synced across devices.',
 	setting__fontSize: 'Font size',
+	setting__fontSize__description: 'Text size in points.',
 	setting__fontFamily: 'Font family',
 };
 

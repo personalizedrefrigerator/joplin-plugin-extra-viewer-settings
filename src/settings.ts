@@ -35,6 +35,7 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 			minimum: 8,
 			maximum: 30,
 			label: localization.setting__fontSize,
+			description: localization.setting__fontSize__description,
 		},
 		maxWidth: {
 			...defaultSettingOptions,
@@ -43,11 +44,7 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 			minimum: 0,
 			maximum: 1000,
 			label: localization.setting__maximumWidth,
-		},
-		paginate: {
-			...defaultSettingOptions,
-			value: await isMobile(),
-			label: localization.setting__paginate,
+			description: localization.setting__maximumWidth__description,
 		},
 		textAlign: {
 			...defaultSettingOptions,
@@ -62,6 +59,12 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 				'center': localization.setting__textAlign__center,
 				'justify': localization.setting__textAlign__justify,
 			},
+		},
+		paginate: {
+			...defaultSettingOptions,
+			value: await isMobile(),
+			label: localization.setting__paginate,
+			description: localization.setting__paginate__description,
 		},
 	};
 
