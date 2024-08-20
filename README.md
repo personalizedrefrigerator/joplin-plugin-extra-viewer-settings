@@ -2,6 +2,15 @@
 
 This plugin provides several new settings for Joplin's Markdown viewer.
 
+## Screenshot
+
+<center>
+	
+<img src="./images/screenshot-3.png" alt="Screenshot: A single page of a note with math is rendered. A page number is shown at the bottom of the screen and the text uses a medium, serif font."/>
+<p>This screenshot shows a note in paginated mode. Extra markdown viewer settings provides buttons for navigating between pages and a jump to page input at the bottom of the screen. Paginated mode can be enabled or disabled using the gear icon at the top right of the screen.</p>
+
+</center>
+
 ## Platform support
 
 This plugin supports both Joplin mobile and desktop. On mobile, it may be necessary to restart Joplin after installng the plugin for settings to be correctly applied.
