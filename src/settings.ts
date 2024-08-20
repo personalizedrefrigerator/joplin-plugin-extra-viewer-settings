@@ -32,6 +32,8 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 			...defaultSettingOptions,
 			type: SettingItemType.Int,
 			value: 12,
+			minimum: 8,
+			maximum: 30,
 			label: localization.setting__fontSize,
 		},
 		maxWidth: {
