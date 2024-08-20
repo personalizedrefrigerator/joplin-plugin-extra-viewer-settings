@@ -22,7 +22,8 @@ body.paginate {
 		.katex-display {
 			overflow-x: auto;
 			max-height: calc(100vh - var(--viewer-toolbar-height));
-			padding-bottom: 7px;
+			/* Prevents an unnecessary vertical scrollbar from being visible. */
+			padding-bottom: 1em;
 		}
 	}
 
