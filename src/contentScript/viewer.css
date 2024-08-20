@@ -9,8 +9,21 @@ body.paginate {
 }
 
 @media screen {
+	:root {
+		--viewer-toolbar-height: 40px;
+	}
+
 	body.paginate, body.paginate #joplin-container-content {
 		overflow: hidden;
+	}
+
+	body.paginate {
+		/* Scroll display math regions to prevent them from escaping the page. */
+		.katex-display {
+			overflow-x: auto;
+			max-height: calc(100vh - var(--viewer-toolbar-height));
+			padding-bottom: 7px;
+		}
 	}
 
 	.-custom-max-width #rendered-md {
@@ -19,9 +32,6 @@ body.paginate {
 		margin-right: auto;
 	}
 
-	:root {
-		--viewer-toolbar-height: 40px;
-	}
 
 	.paginated-element.paginated-element, #rendered-md.paginaged-element {
 		overflow-y: clip;
