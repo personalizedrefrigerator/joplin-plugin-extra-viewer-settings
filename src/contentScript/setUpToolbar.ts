@@ -53,7 +53,7 @@ const showSettingsDialog = async (control: ContentScriptControl) => {
 
 	const closeButton = makeButton(settingsDialog, {
 		content: 'Close',
-		classList: [ 'button' ]
+		classList: [ 'close' ]
 	});
 
 	const updateControlValues = () => {
