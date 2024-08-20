@@ -56,7 +56,7 @@ const control: ContentScriptControl = {
 	restoreScroll: (cacheKey) => {
 		if (cacheKey >= 0 && 'paginationController' in window) {
 			const paginationController = window.paginationController as PaginationController;
-			paginationController?.setLocation(cacheKey)?.scrollIntoView();
+			paginationController?.scrollLocationIntoView(cacheKey);
 		}
 	},
 };

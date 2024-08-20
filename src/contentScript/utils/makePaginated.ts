@@ -170,9 +170,15 @@ export const makePaginated = (
 	};
 	container.addEventListener('scroll', onScroll);
 
+	// This method is provided as a workaround -- setCurrentLocation may fail if the document is currently
+	// scrolling. However, scrollLocationIntoView may unnecessarily scroll anscestors.
+	const scrollLocationIntoView = (loc: number) => {
+		setCurrentLocation(loc)?.scrollIntoView({ block: 'end' });
+	};
+
 	const onResize = debounce(() => {
 		// Prevent the reading location from being lost
-		setCurrentLocation(lastLocation)?.scrollIntoView();
+		scrollLocationIntoView(lastLocation);
 	}, 100);
 	window.addEventListener('resize', onResize);
 
@@ -202,6 +208,8 @@ export const makePaginated = (
 
 		setLocation: setCurrentLocation,
 		getLocation: getCurrentLocation,
+
+		scrollLocationIntoView,
 	};
 };
 
