@@ -1,3 +1,14 @@
+# 0.2.0
+
+- Features
+	- Added a text alignment setting.
+	- Allow block KaTeX to scroll in paged mode.
+- Bug fixes
+	- Fix line height is not correctly adjusted with text size.
+	- **Web**: Fix Joplin's action bar is scrolled out of view when changing settings.
+- Other changes
+	- Adjusts style of next/previous page buttons.
+
 # 0.1.0
 
 - Bug fixes:
