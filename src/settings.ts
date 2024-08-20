@@ -49,6 +49,20 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 			value: await isMobile(),
 			label: localization.setting__paginate,
 		},
+		textAlign: {
+			...defaultSettingOptions,
+			type: SettingItemType.String,
+			value: '',
+			isEnum: true,
+			label: localization.setting__textAlign,
+			options: {
+				'unset': localization.setting__textAlign__unset,
+				'start': localization.setting__textAlign__start,
+				'end': localization.setting__textAlign__end,
+				'center': localization.setting__textAlign__center,
+				'justify': localization.setting__textAlign__justify,
+			},
+		},
 	};
 
 	const readSettings = async () => {

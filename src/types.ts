@@ -5,6 +5,7 @@ export interface PluginSettings {
 	fontSize: number|null;
 	paginate: boolean;
 	maxWidth: number|null;
+	textAlign: string;
 }
 
 type NoteAndLocation = { noteId: string; location: number; };

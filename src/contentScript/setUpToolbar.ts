@@ -103,6 +103,7 @@ export const setUpToolbar = (control: ContentScriptControl) => {
 		const settings = await control.getSettings();
 		document.documentElement.style.setProperty('--user-font-family', settings.fontFamily);
 		document.documentElement.style.setProperty('--user-font-size', settings.fontSize ? `${settings.fontSize}pt` : '');
+		document.documentElement.style.setProperty('--user-text-align', settings.textAlign ?? '');
 
 		if (settings.maxWidth) {
 			document.documentElement.classList.add('-custom-max-width');

@@ -5,22 +5,25 @@ interface AppLocalization {
 	setting__fontFamily: string;
 	settings__appName: string;
 	settings__description: string;
-	setting__textDirection: string;
-	setting__textDirection__description: string;
-	setting__textDirection__auto: string;
-	setting__textDirection__leftToRight: string;
-	setting__textDirection__rightToLeft: string;
+
+	setting__textAlign: string;
+	setting__textAlign__unset: string;
+	setting__textAlign__start: string;
+	setting__textAlign__end: string;
+	setting__textAlign__center: string;
+	setting__textAlign__justify: string;
 }
 
 const defaultStrings: AppLocalization = {
 	settings__appName: 'Extra viewer settings',
 	settings__description: 'Additional settings for Joplin\'s Markdown viewer.',
 
-	setting__textDirection: 'Text direction',
-	setting__textDirection__description: 'Overrides the default direction of text in the CodeMirror editor. For most users, this should be set to "auto".',
-	setting__textDirection__auto: 'Auto',
-	setting__textDirection__leftToRight: 'Left-to-right',
-	setting__textDirection__rightToLeft: 'Right-to-left',
+	setting__textAlign: 'Text alignment',
+	setting__textAlign__unset: 'Unset',
+	setting__textAlign__start: 'Start',
+	setting__textAlign__end: 'End',
+	setting__textAlign__center: 'Center',
+	setting__textAlign__justify: 'Justify',
 	setting__maximumWidth: 'Maximum viewer width',
 	setting__paginate: 'Paginate',
 	setting__fontSize: 'Font size',
