@@ -23,9 +23,14 @@ body.paginate {
 		/* Scroll display math regions to prevent them from escaping the page. */
 		.katex-display {
 			overflow-x: auto;
-			max-height: calc(100vh - var(--viewer-toolbar-height));
+			max-height: var(--max-content-height);
 			/* Prevents an unnecessary vertical scrollbar from being visible. */
 			padding-bottom: 1em;
+		}
+
+		pre {
+			/* Reserve 5px for a scrollbar. */
+			max-height: calc(var(--max-content-height) - 5px);
 		}
 	}
 
@@ -37,6 +42,8 @@ body.paginate {
 
 
 	.paginated-element.paginated-element, #rendered-md.paginaged-element {
+		--max-content-height: calc(100vh - var(--viewer-toolbar-height));
+
 		overflow-y: clip;
 		overflow-x: auto;
 		scroll-behavior: smooth;
@@ -135,18 +142,18 @@ body.paginate {
 
 	&.-left {
 		left: 0;
-		padding-right: 7px;
-		padding-left: 3px;
+		padding-right: 7px !important;
+		padding-left: 3px !important;
 	}
 
 	&.-right {
 		right: 0;
-		padding-left: 7px;
-		padding-right: 3px;
+		padding-left: 7px !important;
+		padding-right: 3px !important;
 	}
 
 	&:hover, &:focus-visible {
-		font-size: 1.5rem;
+		font-weight: bold;
 		opacity: 0.8;
 	}
 
@@ -154,7 +161,7 @@ body.paginate {
 		opacity: 0.1;
 	}
 
-	transition: 0.4s ease font-size, 0.4s ease opacity;
+	transition: font-size 0.4s ease, opacity 0.4s ease;
 }
 
 .reader-page-number {
