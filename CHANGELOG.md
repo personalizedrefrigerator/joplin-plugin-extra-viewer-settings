@@ -1,3 +1,11 @@
+# 0.3.0
+
+- Features
+	- Added a "wrap code blocks" setting.
+- Bug fixes
+	- Fixed incorrect button size while switching pages on iOS/web.
+	- Fix items below the topmost toolbar can't be clicked.
+
 # 0.2.0
 
 - Features
