@@ -1,6 +1,6 @@
 import joplin from "api";
 import { SettingItem, SettingItemSubType, SettingItemType, SettingStorage } from "api/types";
-import { PluginSettings } from "./types";
+import { CodeBlockScrollMode, PluginSettings } from "./types";
 import localization from "./localization";
 import { isMobile } from "./utils/isMobile";
 
@@ -18,6 +18,8 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 		type: SettingItemType.Bool,
 		storage: SettingStorage.File,
 	};
+
+	const onMobile = await isMobile();
 
 	const settingsSpec: Record<keyof PluginSettings, SettingItem> = {
 		fontFamily: {
@@ -60,9 +62,20 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 				'justify': localization.setting__textAlign__justify,
 			},
 		},
+		codeBlockScroll: {
+			...defaultSettingOptions,
+			type: SettingItemType.String,
+			value: onMobile ? CodeBlockScrollMode.Wrap : CodeBlockScrollMode.Scroll,
+			isEnum: true,
+			label: localization.setting__codeBlockScroll,
+			options: {
+				[CodeBlockScrollMode.Scroll]: localization.setting__codeBlockScroll__scroll,
+				[CodeBlockScrollMode.Wrap]: localization.setting__codeBlockScroll__wrap,
+			},
+		},
 		paginate: {
 			...defaultSettingOptions,
-			value: await isMobile(),
+			value: onMobile,
 			label: localization.setting__paginate,
 			description: localization.setting__paginate__description,
 		},

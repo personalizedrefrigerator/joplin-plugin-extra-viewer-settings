@@ -1,4 +1,9 @@
 
+export enum CodeBlockScrollMode {
+	Scroll = 'scroll',
+	Wrap = 'wrap',
+}
+
 export interface PluginSettings {
 	// null => default
 	fontFamily: string|null;
@@ -6,6 +11,7 @@ export interface PluginSettings {
 	paginate: boolean;
 	maxWidth: number|null;
 	textAlign: string;
+	codeBlockScroll: CodeBlockScrollMode;
 }
 
 type NoteAndLocation = { noteId: string; location: number; };

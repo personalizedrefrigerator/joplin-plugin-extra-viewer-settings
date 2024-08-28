@@ -113,6 +113,12 @@ export const setUpToolbar = (control: ContentScriptControl) => {
 			document.documentElement.style.removeProperty('--user-max-width');
 		}
 
+		if (settings.codeBlockScroll === 'scroll') {
+			document.body.classList.add('-scroll-code-blocks');
+		} else {
+			document.body.classList.remove('-scroll-code-blocks');
+		}
+
 		control.restoreScroll(savedScroll);
 	};
 

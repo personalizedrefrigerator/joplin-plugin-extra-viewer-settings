@@ -15,6 +15,10 @@ interface AppLocalization {
 	setting__textAlign__end: string;
 	setting__textAlign__center: string;
 	setting__textAlign__justify: string;
+
+	setting__codeBlockScroll: string;
+	setting__codeBlockScroll__scroll: any;
+	setting__codeBlockScroll__wrap: any;
 }
 
 const defaultStrings: AppLocalization = {
@@ -27,6 +31,10 @@ const defaultStrings: AppLocalization = {
 	setting__textAlign__end: 'End',
 	setting__textAlign__center: 'Center',
 	setting__textAlign__justify: 'Justify',
+
+	setting__codeBlockScroll: 'Scroll or wrap codeblocks',
+	setting__codeBlockScroll__scroll: 'Scroll',
+	setting__codeBlockScroll__wrap: 'Wrap',
 
 	setting__maximumWidth: 'Maximum width',
 	setting__maximumWidth__description: 'Maximum width of rendered content in the note viewer. Set this to 0 to use the default.',
