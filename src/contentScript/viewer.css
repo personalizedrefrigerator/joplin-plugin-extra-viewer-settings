@@ -77,6 +77,9 @@ body.paginate {
 		flex-direction: row;
 		justify-content: end;
 
+		/* Pass pointer events through to elements behind the toolbar. */
+		pointer-events: none;
+
 		> button {
 			background-color: transparent;
 			border: none;
@@ -85,6 +88,7 @@ body.paginate {
 			padding: 4px;
 			cursor: pointer;
 			opacity: 0.6;
+			pointer-events: auto;
 
 			border: 2px solid transparent;
 
