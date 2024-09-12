@@ -17,8 +17,11 @@ interface AppLocalization {
 	setting__textAlign__justify: string;
 
 	setting__codeBlockScroll: string;
-	setting__codeBlockScroll__scroll: any;
-	setting__codeBlockScroll__wrap: any;
+	setting__codeBlockScroll__scroll: string;
+	setting__codeBlockScroll__wrap: string;
+
+	button__close: string;
+	label__paginate: string;
 }
 
 const defaultStrings: AppLocalization = {
@@ -38,12 +41,17 @@ const defaultStrings: AppLocalization = {
 
 	setting__maximumWidth: 'Maximum width',
 	setting__maximumWidth__description: 'Maximum width of rendered content in the note viewer. Set this to 0 to use the default.',
-	setting__paginate: 'Paginate',
-	setting__paginate__description:
-		'If enabled, Markdown notes are shown in a paged reading mode. In this mode, reading progress is saved and synced across devices.',
 	setting__fontSize: 'Font size',
 	setting__fontSize__description: 'Text size in points.',
 	setting__fontFamily: 'Font family',
+	setting__paginate: 'Paginate',
+	setting__paginate__description:
+		'If enabled, Markdown notes are shown in a paged reading mode. In this mode, reading progress is saved and synced across devices.',
+
+	label__paginate: 'Paginate: ',
+
+
+	button__close: 'Close',
 };
 
 const localizations: Record<string, AppLocalization> = {

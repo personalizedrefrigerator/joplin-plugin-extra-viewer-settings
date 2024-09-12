@@ -1,3 +1,4 @@
+import localization from "../localization";
 import { ContentScriptControl, PluginSettings } from "../types";
 import { debounce } from "./utils/debounce";
 import { makeButton } from "./utils/makeButton";
@@ -41,7 +42,7 @@ const showSettingsDialog = async (control: ContentScriptControl) => {
 	};
 
 	const showReaderCheckbox = makeInput(settingsDialog, {
-		label: 'Paginate:',
+		label: localization.label__paginate,
 		type: 'checkbox',
 		classList: [],
 	});
@@ -52,7 +53,7 @@ const showSettingsDialog = async (control: ContentScriptControl) => {
 	};
 
 	const closeButton = makeButton(settingsDialog, {
-		content: 'Close',
+		content: localization.button__close,
 		classList: [ 'close' ]
 	});
 
