@@ -1,3 +1,11 @@
+# 0.4.0
+
+- Features
+	- Added a "hide settings button" setting.
+- Bug fixes
+	- Fix styles fail to load in old Android WebView versions (#1).
+
+
 # 0.3.0
 
 - Features
