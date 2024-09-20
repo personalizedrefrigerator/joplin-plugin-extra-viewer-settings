@@ -79,6 +79,12 @@ export const registerSettings = async (applySettings: (settings: PluginSettings)
 			label: localization.setting__paginate,
 			description: localization.setting__paginate__description,
 		},
+		showQuickSettings: {
+			...defaultSettingOptions,
+			value: true,
+			label: localization.setting__quickSettingsVisible,
+			description: localization.setting__quickSettingsVisible__description,
+		},
 	};
 
 	const readSettings = async () => {

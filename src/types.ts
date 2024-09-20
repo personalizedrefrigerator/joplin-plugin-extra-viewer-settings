@@ -12,6 +12,7 @@ export interface PluginSettings {
 	maxWidth: number|null;
 	textAlign: string;
 	codeBlockScroll: CodeBlockScrollMode;
+	showQuickSettings: boolean;
 }
 
 type NoteAndLocation = { noteId: string; location: number; };

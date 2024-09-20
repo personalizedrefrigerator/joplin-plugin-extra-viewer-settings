@@ -20,6 +20,9 @@ interface AppLocalization {
 	setting__codeBlockScroll__scroll: string;
 	setting__codeBlockScroll__wrap: string;
 
+	setting__quickSettingsVisible: string;
+	setting__quickSettingsVisible__description: string;
+
 	button__close: string;
 	label__paginate: string;
 }
@@ -48,8 +51,10 @@ const defaultStrings: AppLocalization = {
 	setting__paginate__description:
 		'If enabled, Markdown notes are shown in a paged reading mode. In this mode, reading progress is saved and synced across devices.',
 
-	label__paginate: 'Paginate: ',
+	setting__quickSettingsVisible: 'Show quick settings',
+	setting__quickSettingsVisible__description: 'If enabled, shows a gear button that allows quickly changing viewer settings.',
 
+	label__paginate: 'Paginate: ',
 
 	button__close: 'Close',
 };
