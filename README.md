@@ -1,6 +1,6 @@
 # Extra Markdown viewer settings
 
-This plugin provides several new settings for Joplin's Markdown viewer.
+This plugin provides several new settings for [Joplin](https://joplinapp.org/)'s Markdown viewer.
 
 ## Screenshot
 
