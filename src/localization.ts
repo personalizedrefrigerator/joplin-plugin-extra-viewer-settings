@@ -65,6 +65,37 @@ const localizations: Record<string, AppLocalization> = {
 	es: {
 		...defaultStrings,
 	},
+	hr: {
+		settings__appName: 'Dodatne postavke preglednika',
+		settings__description: 'Dodatne postavke za Joplinov Markdown preglednik.',
+
+		setting__textAlign: 'Poravnanje teksta',
+		setting__textAlign__unset: 'Nepostavljeno',
+		setting__textAlign__start: 'Početak',
+		setting__textAlign__end: 'Kraj',
+		setting__textAlign__center: 'Centrirano',
+		setting__textAlign__justify: 'Obostrano poravnanje',
+
+		setting__codeBlockScroll: 'Klizna traka ili prelamanje blokova koda',
+		setting__codeBlockScroll__scroll: 'Klizna traka',
+		setting__codeBlockScroll__wrap: 'Prelamanje',
+
+		setting__maximumWidth: 'Maksimalna širina',
+		setting__maximumWidth__description: 'Maksimalna širina prikazanog sadržaja u pregledniku bilješki. Postavi na 0 za korištenje zadane vrijednosti.',
+		setting__fontSize: 'Veličina fonta',
+		setting__fontSize__description: 'Veličina teksta u točkama.',
+		setting__fontFamily: 'Font',
+		setting__paginate: 'Paginiraj',
+		setting__paginate__description:
+			'Ako je uključeno, Markdown bilješke se prikazuju u modusu čitanja paginiranih stranica. U ovom se modusu napredak čitanja sprema i sinkronizira između uređaja.',
+
+		setting__quickSettingsVisible: 'Prikaži brze postavke',
+		setting__quickSettingsVisible__description: 'Ako je uključeno, prikazuje gumb s kotačićem za brzza brzo mijenjanje postavki preglednika.',
+
+		label__paginate: 'Paginiraj: ',
+
+		button__close: 'Zatvori',
+	},
 };
 
 let localization: AppLocalization | undefined;
